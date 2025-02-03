@@ -5,6 +5,20 @@ VisualStudioVersion = 17.12.35514.174 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asgr.HospitalAdmin.WebApi", "Asgr.HospitalAdmin.WebApi\Asgr.HospitalAdmin.WebApi.csproj", "{9FB3E6E7-A20A-415E-9CCC-73E1D63057CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asgr.HospitalAdmin.Domain", "Asgr.HospitalAdmin.Domain\Asgr.HospitalAdmin.Domain.csproj", "{3B4FDCB5-068F-40F0-89A1-7B38746EE3A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asgr.HospitalAdmin.Persistence", "Asgr.HospitalAdmin.Persistence\Asgr.HospitalAdmin.Persistence.csproj", "{78A1167B-E152-43C1-9EAE-C8DA97759C17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asgr.HospitalAdmin.Application", "Asgr.HospitalAdmin.Application\Asgr.HospitalAdmin.Application.csproj", "{ADCC9E19-30A2-4991-9172-36330F018D04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asgr.HospitalAdmin.DataSeedService", "Asgr.HospitalAdmin.DataSeedService\Asgr.HospitalAdmin.DataSeedService.csproj", "{EE371E4F-56E2-4263-86FF-D056F396231B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1D25FBB7-BA00-4B90-B966-EBC35861FD95}"
+	ProjectSection(SolutionItems) = preProject
+		crt\aspnetapp.pfx = crt\aspnetapp.pfx
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +29,22 @@ Global
 		{9FB3E6E7-A20A-415E-9CCC-73E1D63057CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FB3E6E7-A20A-415E-9CCC-73E1D63057CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FB3E6E7-A20A-415E-9CCC-73E1D63057CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B4FDCB5-068F-40F0-89A1-7B38746EE3A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B4FDCB5-068F-40F0-89A1-7B38746EE3A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B4FDCB5-068F-40F0-89A1-7B38746EE3A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B4FDCB5-068F-40F0-89A1-7B38746EE3A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A1167B-E152-43C1-9EAE-C8DA97759C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A1167B-E152-43C1-9EAE-C8DA97759C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A1167B-E152-43C1-9EAE-C8DA97759C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A1167B-E152-43C1-9EAE-C8DA97759C17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADCC9E19-30A2-4991-9172-36330F018D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADCC9E19-30A2-4991-9172-36330F018D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADCC9E19-30A2-4991-9172-36330F018D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADCC9E19-30A2-4991-9172-36330F018D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE371E4F-56E2-4263-86FF-D056F396231B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE371E4F-56E2-4263-86FF-D056F396231B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE371E4F-56E2-4263-86FF-D056F396231B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE371E4F-56E2-4263-86FF-D056F396231B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
