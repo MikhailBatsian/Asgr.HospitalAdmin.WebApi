@@ -1,35 +1,58 @@
-namespace Asgr.HospitalAdmin.WebApi
+using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using Asgr.HospitalAdmin.Application.Patients.Repositories;
+using Asgr.HospitalAdmin.Application.Patients.Services;
+using Asgr.HospitalAdmin.Application.Patients.Services.Interfaces;
+using Asgr.HospitalAdmin.Persistence;
+using Asgr.HospitalAdmin.Persistence.Repositories;
+using Asgr.HospitalAdmin.WebApi.Infrastructure.Extensions;
+using Asgr.HospitalAdmin.WebApi.Validators;
+
+namespace Asgr.HospitalAdmin.WebApi;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+        
+        builder.AddDbContext();
+
+        builder.Services.AddScoped<IPatientService, PatientService>();
+        builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+            
+        builder.Services.AddControllers();
+        builder.Services.AddSwagger();
+        builder.Services.AddValidatorsFromAssemblyContaining<PatientRequestModelValidator>();
+        builder.Services.AddCors(options =>
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            options.AddDefaultPolicy(policy =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
 
-            app.UseHttpsRedirection();
+        var app = builder.Build();
 
-            app.UseAuthorization();
+        app.UseExceptionHandler();
+        app.UseCors();
+        app.UseSwaggerApi();
+        app.UseHttpsRedirection();
+        app.MapControllers();
 
+        ApplyNewMigrations(app);
 
-            app.MapControllers();
+        app.MapGet("/api", () => Results.Ok("API is running"));
 
-            app.Run();
-        }
+        app.Run();
+    }
+
+    private static void ApplyNewMigrations(WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<HospitalAdminDbContext>();
+        dbContext.Database.Migrate();
     }
 }
