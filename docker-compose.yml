@@ -1,0 +1,53 @@
+﻿version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: hospital-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: hospital
+    ports:
+      - "5433:5432"
+    networks:
+     - hospital-admin-network
+
+  webapi:
+    build:
+      context: .
+      dockerfile: Asgr.HospitalAdmin.WebApi/Dockerfile
+    container_name: hospital-api
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "9000:80"
+      - "9443:443"
+    environment:
+      ASPNETCORE_URLS: "https://+;http://+"
+      ASPNETCORE_Kestrel__Certificates__Default__Password: "password"
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      ConnectionStrings__Database: "Host=db;Port=5432;Database=hospital;Integrated Security=true;Username=admin;Password=admin"
+    networks:
+      - hospital-admin-network
+    volumes:
+      - ./crt:/https/
+
+  dataseed:
+    build:
+      context: .
+      dockerfile: Asgr.HospitalAdmin.DataSeedService/Dockerfile
+    container_name: hospital-dataseed
+    depends_on:
+      - webapi
+    environment:
+      ApiUrl: "https://webapi/api"
+      GeneratedPatientsCount: 100
+    networks:
+      - hospital-admin-network
+
+networks:
+  hospital-admin-network:
+    driver: bridge
