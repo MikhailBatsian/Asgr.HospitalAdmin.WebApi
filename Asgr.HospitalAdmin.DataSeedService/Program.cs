@@ -9,7 +9,7 @@ internal class Program
     {
         const string API_URL = "ApiUrl";
         const string GENERATED_PATIENTS_COUNT = "GeneratedPatientsCount";
-        
+
         var settingsStr = await File.ReadAllTextAsync("appsettings.json");
         var config = JsonSerializer.Deserialize<Dictionary<string, string>>(settingsStr);
         

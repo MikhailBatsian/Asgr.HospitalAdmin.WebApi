@@ -1,4 +1,5 @@
 ﻿using Asgr.HospitalAdmin.Application.Patients.Dto;
+using Asgr.HospitalAdmin.Domain.Patients.Enums;
 
 namespace Asgr.HospitalAdmin.WebApi.Models.Request.Mappers;
 
@@ -15,7 +16,7 @@ public static class PatientRequestModelMapper
                 Family = requestModel.Name.Family,
                 Given = requestModel.Name.Given
             },
-            Gender = requestModel.Gender,
+            Gender = Enum.Parse<Gender>(requestModel.Gender, ignoreCase: true),
             BirthDate = requestModel.BirthDate,
             Active = requestModel.Active
         };

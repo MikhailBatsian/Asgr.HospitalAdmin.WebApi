@@ -10,7 +10,10 @@ public class ApiService
 
     public ApiService(string apiUrl)
     {
-        _httpClient = new HttpClient();
+        _httpClient = new HttpClient(new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        });
         _apiUrl = apiUrl;
     }
 
