@@ -12,7 +12,7 @@ public static class PatientMapper
             Id = dto.Name.Id,
             Name = dto.Name.ToEntity(),
             Gender = dto.Gender,
-            BirthDate = dto.BirthDate,
+            BirthDate = DateTime.SpecifyKind(dto.BirthDate, DateTimeKind.Utc),
             Active = dto.Active
         };
     }

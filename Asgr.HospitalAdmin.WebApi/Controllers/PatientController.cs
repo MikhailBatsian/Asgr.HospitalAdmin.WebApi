@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Asgr.HospitalAdmin.Application.Patients.Dto;
 using Asgr.HospitalAdmin.Application.Patients.Filters;
 using Asgr.HospitalAdmin.Application.Patients.Services.Interfaces;
 using Asgr.HospitalAdmin.WebApi.Models.Request;
 using Asgr.HospitalAdmin.WebApi.Models.Request.Mappers;
 using Asgr.HospitalAdmin.WebApi.Models.Response;
+using Asgr.HospitalAdmin.WebApi.Models.Response.Mappers;
 
 namespace Asgr.HospitalAdmin.WebApi.Controllers;
 
@@ -17,32 +17,39 @@ public class PatientController : Controller
 
     private readonly IPatientService _patientService;
     private readonly IValidator<PatientRequestModel> _patientValidator;
+    private readonly IValidator<PatientFilterRequestModel> _patientFilterValidator;
 
     public PatientController(
         IPatientService patientService, 
-        IValidator<PatientRequestModel> patientValidator)
+        IValidator<PatientRequestModel> patientValidator, 
+        IValidator<PatientFilterRequestModel> patientFilterValidator)
     {
         _patientService = patientService;
         _patientValidator = patientValidator;
+        _patientFilterValidator = patientFilterValidator;
     }
 
     [HttpGet("search")]
     public async Task<IActionResult> Search([FromQuery] PatientFilterRequestModel filter, CancellationToken cancellationToken)
     {
+        var validationResult = await _patientFilterValidator.ValidateAsync(filter, cancellationToken);
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.ToDictionary());
+
         var patientFilter = new PatientFilter
         {
             Skip = filter.Skip,
             Take = filter.Take,
-            BirthdayHl7 = filter.Birthday
+            BirthDateHl7 = filter.BirthDate
         };
 
         var patients = await _patientService.SearchAsync(patientFilter, cancellationToken);
         var patientsCount = await _patientService.CountAsync(patientFilter, cancellationToken);
         
-        return Ok(new PagingResponseModel<PatientDto>
+        return Ok(new PagingResponseModel<PatientResponseModel>
         {
             TotalCount = patientsCount,
-            Items = patients
+            Items = patients.Select(x => x.ToResponse()).ToArray()
         });
     }
 
@@ -53,7 +60,7 @@ public class PatientController : Controller
         if (patient == null)
             return NotFound();
 
-        return Ok(patient);
+        return Ok(patient.ToResponse());
     }
 
     [HttpPost]
@@ -71,14 +78,13 @@ public class PatientController : Controller
         }
 
         var patientDto = requestModel.ToDto();
-       
-        await _patientService.CreateAsync(patientDto, cancellationToken);
+        var createdPatient = await _patientService.CreateAsync(patientDto, cancellationToken);
 
-        return CreatedAtAction(nameof(Create), new { id = patientDto.Name.Id }, patientDto);
+        return CreatedAtAction(nameof(Create), new { id = patientDto.Name.Id }, createdPatient.ToResponse());
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(PatientRequestModel requestModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromBody] PatientRequestModel requestModel, CancellationToken cancellationToken)
     {
         var validationResult = await _patientValidator.ValidateAsync(requestModel, cancellationToken);
         if (!validationResult.IsValid)

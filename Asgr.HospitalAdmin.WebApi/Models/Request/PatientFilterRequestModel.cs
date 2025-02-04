@@ -2,5 +2,5 @@
 
 public class PatientFilterRequestModel : PageFilter
 {
-    public string Birthday { get; set; }
+    public string BirthDate { get; set; }
 }

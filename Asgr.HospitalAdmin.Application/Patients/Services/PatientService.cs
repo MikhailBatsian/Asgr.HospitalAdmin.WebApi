@@ -40,9 +40,12 @@ public class PatientService : IPatientService
         return result;
     }
 
-    public async Task CreateAsync(PatientDto patient, CancellationToken cancellationToken = default)
+    public async Task<PatientDto> CreateAsync(PatientDto patientDto, CancellationToken cancellationToken = default)
     {
-        await _patientRepository.AddAsync(patient.ToEntity(), cancellationToken);
+        var patient = await _patientRepository.AddAsync(patientDto.ToEntity(), cancellationToken);
+        var result = patient.ToDto();
+        
+        return result;
     }
 
     public async Task UpdateAsync(PatientDto patient, CancellationToken cancellationToken = default)

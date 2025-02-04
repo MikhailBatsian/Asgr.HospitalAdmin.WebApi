@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using Asgr.HospitalAdmin.Application;
 using Asgr.HospitalAdmin.Application.Patients.Repositories;
 using Asgr.HospitalAdmin.Domain.Patients.Entities;
 using Asgr.HospitalAdmin.Application.Patients.Filters;
@@ -29,17 +30,20 @@ public class PatientRepository : IPatientRepository
         return await GetFilterQuery(filter).CountAsync(cancellationToken: cancellationToken);
     }
 
-    public async Task AddAsync(Patient patient, CancellationToken cancellationToken = default)
+    public async Task<Patient> AddAsync(Patient patient, CancellationToken cancellationToken = default)
     {
         await _context.Patients.AddAsync(patient, cancellationToken);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        return patient;
     }
 
     public async Task<Patient> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Patients
             .Include(p => p.Name)
+            .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
@@ -65,9 +69,9 @@ public class PatientRepository : IPatientRepository
     {
         var query = _context.Patients.Include(p => p.Name).AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(filter.BirthdayHl7))
+        if (!string.IsNullOrWhiteSpace(filter.BirthDateHl7))
         {
-            var match = Regex.Match(filter.BirthdayHl7, @"^(eq|lt|le|gt|ge|ne|sa|eb|ap)?(\d{4}-\d{2}-\d{2})$");
+            var match = Regex.Match(filter.BirthDateHl7, Constants.HL7_DATE_FORMAT);
             var operatorString = match.Groups[1].Value;
             var birthDate = DateTime.Parse(match.Groups[2].Value);
             birthDate = DateTime.SpecifyKind(birthDate, DateTimeKind.Utc);

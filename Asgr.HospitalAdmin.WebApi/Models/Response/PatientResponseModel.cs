@@ -1,6 +1,8 @@
-﻿namespace Asgr.HospitalAdmin.DataSeedService.Models;
+﻿using Asgr.HospitalAdmin.Application.Patients.Dto;
 
-public class PatientDto
+namespace Asgr.HospitalAdmin.WebApi.Models.Response;
+
+public class PatientResponseModel
 {
     public HumanNameDto Name { get; set; }
     public string Gender { get; set; }
