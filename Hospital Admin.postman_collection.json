@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "a54ca4e6-93e9-4fe3-bc12-d88b3ce227af",
+		"name": "Hospital Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4236308"
+	},
+	"item": [
+		{
+			"name": "search_patient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:9443/api/patient/search?birthday=lt2023-12-21",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9443",
+					"path": [
+						"api",
+						"patient",
+						"search"
+					],
+					"query": [
+						{
+							"key": "birthday",
+							"value": "lt2023-12-21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_patient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:9443/api/patient/d8ff176f-bd0a-4b8e-b329-871952e32e1f",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9443",
+					"path": [
+						"api",
+						"patient",
+						"d8ff176f-bd0a-4b8e-b329-871952e32e1f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_patient",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:9443/api/patient/d8ff176f-bd0a-4b8e-b329-871952e32e1f",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9443",
+					"path": [
+						"api",
+						"patient",
+						"d8ff176f-bd0a-4b8e-b329-871952e32e1f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_patient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\":{\r\n      \"id\":\"d8ff176f-bd0a-4b8e-b329-871952e32e1f\",\r\n      \"use\":\"official\",\r\n      \"family\":\"Иванов\",\r\n      \"given\":[\r\n         \"Иван\",\r\n         \"Иванович\"\r\n      ]\r\n   },\r\n   \"gender\":\"male\",\r\n   \"birthDate\":\"2024-01-13T18:25:43\",\r\n   \"active\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:9443/api/patient",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9443",
+					"path": [
+						"api",
+						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_patient",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\":{\r\n      \"id\":\"d8ff176f-bd0a-4b8e-b329-871952e32e1f\",\r\n      \"use\":\"not-official\",\r\n      \"family\":\"Ivanova\",\r\n      \"given\":[\r\n         \"Ivanova\",\r\n         \"Ivanova\"\r\n      ]\r\n   },\r\n   \"gender\":\"female\",\r\n   \"birthDate\":\"2024-01-14T18:25:43\",\r\n   \"active\":false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:9443/api/patient/d8ff176f-bd0a-4b8e-b329-871952e32e1f",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9443",
+					"path": [
+						"api",
+						"patient",
+						"d8ff176f-bd0a-4b8e-b329-871952e32e1f"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
