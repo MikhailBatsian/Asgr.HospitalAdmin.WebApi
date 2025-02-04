@@ -72,8 +72,3 @@ The application should generate **100 Patient entities** and add them via the AP
 - Retrieve a patient by ID  
 - Delete a patient  
 - Various search queries using the `birthDate` parameter  
-
----
-
-### 7. Publish the project  
-The final implementation should be placed in a **public Git repository** (GitHub, GitLab, etc.).
