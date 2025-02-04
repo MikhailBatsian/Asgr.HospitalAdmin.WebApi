@@ -237,6 +237,7 @@ ClientBin/
 *.dbproj.schemaview
 *.jfm
 *.pfx
+!crt/aspnetapp.pfx
 *.publishsettings
 orleans.codegen.cs
 
